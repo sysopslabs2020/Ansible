@@ -13,3 +13,4 @@
         iburst: yes
 
   roles:
+    - rhel-system-roles.timesync   
