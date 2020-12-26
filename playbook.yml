@@ -1,0 +1,11 @@
+---
+- name: NIC Configuration
+  hosts: rhel7 
+  #become: true
+  roles:
+    - rhel-system-roles.network
+  tasks:
+    - name: restart network
+      service:
+        name: network
+        state: restarted

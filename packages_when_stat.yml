@@ -1,0 +1,21 @@
+---
+- name: install packages with when condition
+  hosts: rhel7,ubuntu
+  become: true
+  
+  tasks:
+    - name: install on all hosts in this play
+      package:
+        name: vim
+       # - httpd
+       # - mod_ssl
+       # - mariadb
+        state: latest
+
+    - name: install only on rhel7 server
+      yum:
+        name: nfs-utils
+       #  - '@Development tools'
+        state: latest
+      when: '"rhel7" in group_names'
+      

@@ -1,0 +1,12 @@
+---
+- name: create user and pwd from secret file
+  hosts: rhel7
+  become: true
+  vars_files:
+    - secret.yml
+  
+  tasks:
+    - name: Create user and pwd from secret.yml file
+      user:
+        name: test
+        password: "{{ password }}"

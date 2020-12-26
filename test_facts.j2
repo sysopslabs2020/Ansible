@@ -1,0 +1,3 @@
+{% for host in groups['rhel7'] %}
+{{ hostvars[host]['ansible_facts']['eth0']['ipv4']['address']}}
+{% endfor %}

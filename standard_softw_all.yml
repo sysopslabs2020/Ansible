@@ -1,0 +1,17 @@
+---
+- name: Install standard software
+  hosts: localhost
+  become: true
+  tasks:
+    - name: verify and install software
+      package:
+        name: "{{ item }}"
+        state: latest
+      loop:
+        - telnet
+        - wget
+        - curl
+        - vim
+        - lsof
+        - nfs-utils
+        - sg3_utils

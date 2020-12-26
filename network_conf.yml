@@ -1,0 +1,27 @@
+---
+- name: NIC Configuration
+  hosts: rhel7
+  
+  roles:
+    - rhel-system-roles.network
+  
+  vars:
+    network_connections:
+      - name: ens33
+        type: ethernet
+        dns:
+          - 8.8.8.8
+        autoconnect: yes
+        persistent_state: present
+        gateway: 192.168.1.254
+        ip:
+          address:
+            - 192.168.1.21/24
+  tasks:
+    - name: restart network
+      service:
+        name: network
+        state: restarted
+  
+#  roles:
+#    - rhel-system-roles.network

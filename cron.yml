@@ -1,0 +1,14 @@
+---
+- name: set a cron
+  hosts: rhel7
+  become: true
+
+  tasks:
+    - name: set a date every 5 min
+      cron:
+        name: date
+        hour: 1
+        minute: 30
+        weekday: 1
+        job: date
+        #state: absent

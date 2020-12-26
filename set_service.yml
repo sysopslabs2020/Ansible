@@ -1,0 +1,20 @@
+---
+- name: set service Chronyd 
+  hosts: rhel7
+  tasks:
+    - name: remove ntpd
+      yum: 
+        name: ntpd
+        state: absent
+
+    - name: install chronyd
+      yum:
+        name: chrony
+        state: installed
+      notify: install chronyd
+
+    - name: enable chornyd service
+      service:
+        name: chronyd
+        enabled: true 
+        state: restarted

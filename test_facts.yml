@@ -1,0 +1,12 @@
+---
+- name: test ansible_facts
+  hosts: localhost
+  tasks:
+    - name: test template
+      stat:
+        path: test_facts.j2
+      register: test_facts
+
+    - name: read var
+      debug:
+        var: test_facts

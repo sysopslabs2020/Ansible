@@ -1,0 +1,22 @@
+---
+- name: Install php and mariadb
+  hosts: db
+  tasks:
+     - name: install packages
+       yum:
+         name:
+           - php
+           - mariadb
+         state: absent 
+
+     - name: Install Dev Tools
+       yum:
+         name: "@Development tools"
+         state: absent
+       when: "'rhel7' in inventory_hostname"
+
+     - name: Upadate all dev group packages
+       yum:
+         name: '*'
+         state: latest
+       when: "'rhel7' in inventory_hostname"

@@ -1,0 +1,15 @@
+--- 
+- name: Set timesync roles 
+  hosts: all 
+  
+  tasks:
+    - name: Set Timezone
+      timezone:
+        name: Europe/Rome
+  
+  vars:
+    timesync_ntp_servers:
+      - hostname: ntp1.inrim.it 
+        iburst: yes
+
+  roles:

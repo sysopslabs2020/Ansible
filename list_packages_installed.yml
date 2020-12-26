@@ -1,0 +1,19 @@
+---
+- name: Check all packages installed
+  hosts: rhel7
+
+  tasks:
+    - name: check packages
+      package_facts:
+        manager: auto
+
+    - name: find all package
+      debug:
+        var: ansible_facts.packages
+
+    - name: find network manager package
+      debug:
+        #msg: "Version {{ansible_facts.packages['NetworkManager'][0].version}}"
+        msg: "Version {{ansible_facts.packages['telnet'][0].version}}"
+      #when: "'NetworkManager' in ansible_facts.packages"
+      when: "'telnet' in ansible_facts.packages"

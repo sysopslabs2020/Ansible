@@ -1,0 +1,55 @@
+---
+- name: Create a report file for all server
+  become: true
+  hosts: all 
+
+  tasks:
+    - name: copy a report file on all host
+      copy:
+        src: report_server.txt
+        dest: /root/report_server.txt
+        owner: root
+        group: root
+        mode: 0644
+
+    - name: change variable on report file
+      lineinfile:
+        path: /root/report_server.txt
+        regexp: '^HOST='
+        line: HOST={{ansible_hostname}}
+        state: present
+    
+    - name: change variable on report file
+      lineinfile:
+        path: /root/report_server.txt
+        regexp: '^KERNEL='
+        line: KERNEL={{ansible_kernel}}
+        state: present
+
+    - name: change variable on report file
+      lineinfile:
+        path: /root/report_server.txt
+        regexp: '^MEMORY='
+        line: MEMORY={{ansible_memtotal_mb}}
+        state: present
+
+    - name: change variable on report file
+      lineinfile:
+        path: /root/report_server.txt
+        regexp: '^BIOS='
+        line: BIOS={{ansible_bios_version}}
+        state: present
+    
+    - name: change variable on report file
+      lineinfile:
+        path: /root/report_server.txt
+        regexp: '^DISK1_SIZE='
+        line: DISK1_SIZE= {{ ansible_devices['sda']['size'] }}
+        state: present
+
+    #- name: change variable on report file
+    #  lineinfile:
+    #    path: /root/report_server.txt
+    #    regexp: '^DISK2_SIZE='
+    #   line: DISK2_SIZE= {{ ansible_devices['sdb']['size'] }}
+    #    state: present

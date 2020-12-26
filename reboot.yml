@@ -1,0 +1,8 @@
+---
+- name: reboot system
+  hosts: ubuntu 
+  tasks:
+    - name: reboot system
+      reboot:
+        msg: The system going on reboot
+        post_reboot_delay: 10

@@ -1,0 +1,6 @@
+HOST=hostname
+MEMORY=total memory in gb
+BIOS=bios version
+KERNEL= kernel version
+DISK1_SIZE= disk size
+DISK2_SIZE= disk size
