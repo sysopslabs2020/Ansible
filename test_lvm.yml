@@ -1,0 +1,43 @@
+---
+- name: Playbook fot LVM
+  hosts: rhel7
+  tasks:
+    - name: Create Partition
+      parted:
+        device: /dev/sdb
+        number: 1
+        flags: [lvm]
+        state: present
+      tags:
+        - remove
+
+    - name: Create VG
+      lvg:
+        vg: vg0
+        pvs: /dev/sdb1 
+      when: ansible_devices.sdb.partitions.sdb1 is defined
+
+    - name: Create LV
+      lvol:
+        vg: vg0
+        lv: lv0
+        size: 1500m
+      when: ansible_lvm_vgs.vg0 is defined and ((ansible_lvm.vgs.vg0.size_g | float ) > 1.5)
+
+    - name: send message if vg not large enough
+      debug:
+        msg: Not enough space for logical volume
+      when: ansible_lvm.vgs.vg0 is defined and ((ansible_lvm.vgs.vg0.size_g | float ) < 1.5)
+
+    - name: create a smaller lv
+      lvol:
+        vg: vg0
+        lv: lv0
+        size: 1500m
+      when: ansible_lvm_vgs.vg0 is defined and ((ansible_lvm_vgs.vg0.size_g | float) < 1.5)
+
+    - name: Format XFS partition
+      filesystem:
+        fstype: xfs
+        dev: /dev/sdb1
+      when: ansible_lvm.vgs.vg0 is defined
